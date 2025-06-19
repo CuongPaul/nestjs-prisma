@@ -17,5 +17,10 @@
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "noFallthroughCasesInSwitch": false
+  },
+  "paths": {
+    "@app/*": ["src/*"],
+    "@user/*": ["src/user/*"],
+    "@post/*": ["src/post/*"]
   }
 }

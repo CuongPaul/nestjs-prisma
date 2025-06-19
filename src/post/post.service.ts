@@ -2,12 +2,20 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
+import { UserService } from 'src/user/user.service';
 
 @Injectable()
 export class PostService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private userService: UserService,
+  ) {}
 
-  create(data: CreatePostDto) {
+  async create(data: CreatePostDto) {
+    const author = await this.userService.findOne(data.authorId);
+    if (!author) {
+      throw new Error('Author not found');
+    }
     return this.prisma.post.create({ data });
   }
 
